@@ -16,4 +16,4 @@ of the list
 ##removeBook method
 is used to remove a book from the lsit of books
 through the library class by using the remove() function.
-it returns a new list of books without the book that was removed
+it returns a new list of books without the book that was removedb
