@@ -1,138 +1,141 @@
-'''
-Library Management System:
-Design a library management system using classes such as Library, Book, and Member.
-Implement features like adding books, borrowing and returning books, and tracking member information.
-Use inheritance and encapsulation to model relationships between different entities in the system.
-'''
-
-from abc import ABC #IMPORT THE ABC FROM abc module
-from abc import abstractmethod #identifier/decorator
-
-
 class Library():
     '''
-    the library class is also the parent class, this means that all other classes
-    will inherit at least one method from thr parent class
+    
     '''
-    _books =  ['The alchemist', '12 Rules for life', '12 more Rules for life',
-                        'love me again', 'Brave new world']
-    def __init__(self,libName, libAddress):
-        '''
-        this function describes all the attributes of the library
-        '''
-        self._name = libName
-        self.address = libAddress
-        self._books = ['The alchemist', '12 Rules for life', '12 more Rules for life',
-                        'love me again', 'Brave new world']
-    
-    def getBookList(self):
-       return self._books
+    def __init__(self, name, address):
+        self.bookList = []
+        self._name = name
+        self._address = address
         
-
-    def getAddress(self):
-       print(f'{self._name} is located in {self.address}')
-
-    def getBooks(self, book):
-        for book in self._books:
-           print(book)
-           f'The current list of books is {self._books}'   
     
-    @abstractmethod
-    def addBook(self,  book):
-        pass
+           
     
-    @abstractmethod
+    def addBook(self, book):
+        if book not in self.bookList:
+           self.bookList.append(book.bookName)
+           return f'{book.bookName} sucessfully added to {self._name} Library '
+        elif book in self.bookList:
+            return f'cannot add because {book.bookName} record already exists'
+    
     def removeBook(self, book):
-        pass
-    
-    
-    def bookStatus(self, book):
-        pass
-        
-        
-
-class Book(Library):
-    
-    def __init__(self,bookName ):
-        self.bName = bookName
-        self.authors = []
-       # self.bAuthor = author
-       # self._books 
-
-    def getBookList(self):
-       return super().getBookList()
-        
-    def addBook(self,  book):
-        '''
-        addBook method is used to add a new book to the lsit of books
-        through the library class by using the append() function.
-        it returns a new list of books with the new book added at the end
-        of the list
-        '''
-        self._books.append(book)
-
-        return self._books
-    
-
-    def removeBook(self, book):
-        '''
-        removeBook method is used to remove a book from the lsit of books
-        through the library class by using the remove() function.
-        it returns a new list of books without the book that was removed
-        '''
-        self._books.remove(book)
-
-        return self._books
-    
-    
-    def bookStatus(self, book):
-        '''
-        bookStatus method is used to check the availability of a book the lsit of books
-        through the library class by using a simple if statement.
-        it returns a statement telling you if the book is in the library or not
-        '''
-        
-        if book in self._books:
-          return print(f'{book} is in the library') 
+        if book in self.bookList:
+            self.bookList.remove(book.bookName)
+            return f'{book.bookName} removed sucesfully from {self._name} library'
         else:
-          return print(f'{book} is not in the lirary at this moment')
+            return f'cannot remove as record of {book} is not found in {self._name} library'
         
+    def displayShelf(self):
+        return self.bookList.copy()
+#CLASS 2 THE BOOK CLASS        
+class Book():
+    def __init__(self, Bookname, author, pages, yearPublished):
+        self.__pages = pages
+        self._year = yearPublished
+        self.bookName = Bookname
+        self.author = author
+
+    def getAuthor(self):
+        return self.author
     
+    def  getNameandAuthor(self):
+        return f'{self.bookName} was written by {self.author}.'
+    
+    def getYear(self):
+        return f'{self.bookName} was published in {self._year}.'
+    
+    def getPages(self):
+        return f'{self.bookName} has {self.__pages} pages.'
+    def __str__(self):
+        return f"{self.bookName} by {self.author}"
+    
+
+
+
+
+class Member():
+    def __init__(self, name, memberID):
+        self.Name = name
+        self.__ID = memberID
+        self._borrowed = []
+
+  
+    def getName(self):
+        return f'{self.__ID}\'s name is {self.Name}.'
+
+    def getId(self):
+        return f'The member ID of {self.Name} is {self.__ID}.'
+
+    def borrow(self, book):
         
-    def addAuthor(self, book,  author):
+            self._borrowed.append(book)
+            return print(f'{self.Name} has borrowed {book.bookName} sucessfully!')
        
-       if book in self._books:
-          self.authors.append(author)
-          return print(f'The author {author} of {book} has been added sucessfully')
-       else:
-          return print(f' We cannot add the author because {book} is not in our library, try another book')
-       
-    def checkAuthor(self, book, author):
-       if author in self.authors and book in self._books:
-          return print(f'The author of {book} is {author}')
+
+    def bookReturn(self, book):
+        if book in self._borrowed:
+            self._borrowed.remove(book)
+            return print(f'{book.bookName} has been returned by {self.Name} sucessfully, borrow again sometime!')
         
-          
-   
-   
-print('library class instances')
-print('--------------------------')
-new = Library('Peterson\'s library', 'Ontario, Canada')
+        elif book not in self._borrowed :
+            return print(f'{self.Name}, {book.bookName} has already been returned, thanks!')
 
-print(f'Welcome to {new._name} library') #is a  way to get the name of the library since its is a protected 
-#member of the class library
-print('---------------------------------')
-new.getAddress() #is the only way to acess the library address since it is a private
-#member of the  library class
-print('---------------------------------')
-print(new.bookStatus('12 Rules for life'))
-print('---------------------------------------------')
+    def checkBook(self, book):
+        if  book in self._borrowed:
+            return print(f'we\'re sorry {self.Name}, {book.bookName} is not available right now :(')
+        elif  book not in self._borrowed:
+            return print(f'''congratulations {self.Name}! {book.bookName} is available, you can go ahead and borrow it :)''')
+        
 
-print('book instances')
-print('----------------------------')
-newbook = Book('12 Rules for life')
-print(newbook.getBookList())
-print('---------------------------------')
-print(newbook.addBook('Newman\'s Journey'))
-print('---------------------------------')
-#print(newbook.addAuthor('12 Rules for life', 'Jordan peterson'))
+print('------------------------instances--------------------------------------')
+library = Library('Peterson\'s Library', 'Toronto, Canada')
+print(f'welcome to {library._name}\'s library in {library._address}')
 
+
+print('--------------------------------------------------------------')
+
+
+rules_12 = Book('12 rules', 'Jordan Peterson', 448, 2018)
+more_12_rules = Book('12 more rules', 'Jordan Peterson', 432, 2021)
+maps_of_meaning = Book('Maps of meaning', 'Jordan Peterson', 564,1999)
+order_in_chaos = Book('Order from Chaos', 'Jordan peterson', 450, 2012)
+Orwellian = Book('1984', 'George Orwell', 280, 1949)
+Brave_new_world = Book('Brave new world', 'Aldous, Huxley', 500, 1932)
+
+
+print(rules_12.getNameandAuthor())
+print('--------------------------------------------------------------')
+print(Orwellian.getYear())
+print('--------------------------------------------------------------')
+print(maps_of_meaning.getPages())
+print('--------------------------------------------------------------')
+
+print(library.addBook(rules_12))
+print(library.addBook(more_12_rules))
+print(library.addBook(maps_of_meaning))
+print(library.addBook(order_in_chaos))
+print(library.addBook(Orwellian))
+print(library.addBook(Brave_new_world))
+#print('-------------------------------------------------------------------------')
+#print(library.getBookList()) #problematic
+
+print('-------------------------------------------------------------------------')
+Ubong = Member('Ubongabasi', 1)
+Itoro = Member('Itorobong', 2)
+
+print(Ubong.getName())
+print('------------------------------------------------------------------------')
+print(Itoro.getId())
+
+print('------------------------------------------------------------------------')
+Ubong.checkBook(rules_12)
+Ubong.borrow(rules_12)
+Ubong.bookReturn(rules_12)
+print('-------------------------------------------------------------------------')
+Itoro.checkBook(Orwellian)
+Itoro.checkBook(maps_of_meaning)
+Itoro.checkBook(more_12_rules)
+Itoro.checkBook(order_in_chaos)
+Itoro.checkBook(Brave_new_world)
+Itoro.borrow(Orwellian)
+print('-------------------------------------------------------------------------')
+print(library.displayShelf())
