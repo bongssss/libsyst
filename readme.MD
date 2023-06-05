@@ -3,10 +3,11 @@ Design a library management system using classes such as Library, Book, and Memb
 Implement features like adding books, borrowing and returning books, and tracking member information.
 Use inheritance and encapsulation to model relationships between different entities in the system.
 
-##the library class 
-is also the parent class, this means that all other classes
-will inherit at least one method from thr parent class
-
+## the library class 
+has attributes in the __init__ method namely;
+self.bookList = [] which is where all the books are contained
+self._name = name  is the name of the library
+self._address = address is the kibrary address
 ## addBook method
 is used to add a new book to the lsit of books
 through the library class by using the append() function.

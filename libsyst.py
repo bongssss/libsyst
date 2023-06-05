@@ -1,15 +1,10 @@
 class Library():
-    '''
     
-    '''
     def __init__(self, name, address):
         self.bookList = []
         self._name = name
         self._address = address
-        
-    
-           
-    
+
     def addBook(self, book):
         if book not in self.bookList:
            self.bookList.append(book.bookName)
