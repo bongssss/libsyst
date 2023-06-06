@@ -5,6 +5,8 @@ class Library():
         self._name = name
         self._address = address
 
+    def welcome(self):
+        print(f'welcome to {library._name}\'s library in {library._address}')
     def addBook(self, book):
         if book not in self.bookList:
            self.bookList.append(book.bookName)
@@ -40,20 +42,13 @@ class Book():
     
     def getPages(self):
         return f'{self.bookName} has {self.__pages} pages.'
-    def __str__(self):
-        return f"{self.bookName} by {self.author}"
-    
-
-
-
-
-class Member():
-    def __init__(self, name, memberID):
-        self.Name = name
+#CLASS3 MEMBER CLASS
+class Member(Library):
+    def __init__(self, Name, memberID):
+        self.Name = Name
         self.__ID = memberID
         self._borrowed = []
-
-  
+    
     def getName(self):
         return f'{self.__ID}\'s name is {self.Name}.'
 
@@ -80,15 +75,11 @@ class Member():
         elif  book not in self._borrowed:
             return print(f'''congratulations {self.Name}! {book.bookName} is available, you can go ahead and borrow it :)''')
         
-
-print('------------------------instances--------------------------------------')
+print('------------------------LIBRARY instances--------------------------------------')
 library = Library('Peterson\'s Library', 'Toronto, Canada')
 print(f'welcome to {library._name}\'s library in {library._address}')
-
-
-print('--------------------------------------------------------------')
-
-
+print(library.displayShelf())
+print('--------------------BOOK METHODS------------------------------------------')
 rules_12 = Book('12 rules', 'Jordan Peterson', 448, 2018)
 more_12_rules = Book('12 more rules', 'Jordan Peterson', 432, 2021)
 maps_of_meaning = Book('Maps of meaning', 'Jordan Peterson', 564,1999)
@@ -96,13 +87,12 @@ order_in_chaos = Book('Order from Chaos', 'Jordan peterson', 450, 2012)
 Orwellian = Book('1984', 'George Orwell', 280, 1949)
 Brave_new_world = Book('Brave new world', 'Aldous, Huxley', 500, 1932)
 
-
 print(rules_12.getNameandAuthor())
-print('--------------------------------------------------------------')
+print('----------------------Book method----------------------------------------')
 print(Orwellian.getYear())
-print('--------------------------------------------------------------')
+print('---------------------------Book method-----------------------------------')
 print(maps_of_meaning.getPages())
-print('--------------------------------------------------------------')
+print('-----------------------added books library metod---------------------------------------')
 
 print(library.addBook(rules_12))
 print(library.addBook(more_12_rules))
@@ -110,27 +100,26 @@ print(library.addBook(maps_of_meaning))
 print(library.addBook(order_in_chaos))
 print(library.addBook(Orwellian))
 print(library.addBook(Brave_new_world))
-#print('-------------------------------------------------------------------------')
-#print(library.getBookList()) #problematic
+print('-----------------------------List of books in shelf(library class method)--------------------------------------------')
+print(library.displayShelf())
 
-print('-------------------------------------------------------------------------')
+print('------------------------Member class instances-------------------------------------------------')
 Ubong = Member('Ubongabasi', 1)
 Itoro = Member('Itorobong', 2)
 
 print(Ubong.getName())
-print('------------------------------------------------------------------------')
+print('-------------------------member method-----------------------------------------------')
 print(Itoro.getId())
 
-print('------------------------------------------------------------------------')
+print('------------------------member methods------------------------------------------------')
 Ubong.checkBook(rules_12)
 Ubong.borrow(rules_12)
 Ubong.bookReturn(rules_12)
-print('-------------------------------------------------------------------------')
+print('---------------------more member methods----------------------------------------------------')
 Itoro.checkBook(Orwellian)
 Itoro.checkBook(maps_of_meaning)
 Itoro.checkBook(more_12_rules)
 Itoro.checkBook(order_in_chaos)
 Itoro.checkBook(Brave_new_world)
 Itoro.borrow(Orwellian)
-print('-------------------------------------------------------------------------')
-print(library.displayShelf())
+print('------------------------END-------------------------------------------------')
